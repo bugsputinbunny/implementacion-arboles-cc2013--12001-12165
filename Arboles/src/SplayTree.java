@@ -8,6 +8,9 @@ public class SplayTree<V extends Comparable> extends BST<V>{
     /*
      * Constructor de un SplayTree Vacio
      */
+    public SplayTree(){
+        super();
+    }
     
     /*
      * Insertar un valor comparable e en el arbol

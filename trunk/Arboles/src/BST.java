@@ -5,6 +5,8 @@
  */
 
 public class BST<V extends Comparable> implements ITree<V>{
+    protected BSNode<V> head;
+
     /*
      * Insertar un valor comparable e en el arbol
      */

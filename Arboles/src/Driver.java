@@ -9,6 +9,7 @@
  */
 import java.util.*;
 public class Driver {
+    private static Scanner scanner = new Scanner(System.in);
 
     /**
      * Menu principal
@@ -75,6 +76,47 @@ public class Driver {
        }   
           
        else if(input == 4){    
+        }
     }
-}
+    /**
+     * Apoyo para programación defensiva.
+     * Se muestra un mensaje que solicita el ingreso de un número entero que esté
+     * entre menor y mayor, inclusive. Tiene programación defensiva para asegurarse
+     * que sea un entero en ese rango.
+     * @param mensaje Texto a mostrar
+     * @param menor Valor mínimo que se necesita
+     * @param mayor Valor máximo que se necesita
+     * @return El int que ingresó el usuario.
+     * @throws IllegalArgumentException si menor > mayor
+     */
+    private static int obtenerEntero(String mensaje, int menor, int mayor)
+            throws IllegalArgumentException{
+        //pre: menor < mayor
+        //post: Se devuelve un entero entre menor y mayor, inclusive
+        String respuesta;
+        int opcion;
+        if(menor > mayor)
+            throw new IllegalArgumentException();
+        else{
+            while(true){
+                System.out.print(mensaje);
+                respuesta = scanner.nextLine();
+                try{
+                    opcion = Integer.parseInt(respuesta);
+                    if(menor <= opcion && opcion <= mayor)
+                        return opcion;
+                    else
+                        System.out.println("ERROR: \"" + respuesta + "\" no está entre "
+                                + menor + " y " + mayor + ".");
+                }
+                catch(NumberFormatException e){
+                    System.out.println("ERROR: \"" + respuesta + "\" no es un "
+                            + "número entero.");
+                }
+
+                System.out.println("Ingrese números enteros entre " + menor
+                        + " y " + mayor + " solamente.");
+            }
+        }
+    }
 }

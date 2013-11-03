@@ -3,9 +3,6 @@
  * 
  *
  */
-
-import java.util.ArrayList;
-
 public class SplayTree<V extends Comparable> extends BST<V>{
     /*
      * Constructor de un SplayTree Vacio
@@ -14,6 +11,29 @@ public class SplayTree<V extends Comparable> extends BST<V>{
         super();
     }
 
+    public void insertar(V value){
+        //Si el arbol esta vacio
+        if(head == null)
+            head = new BSNode<>(value);
+        //Si no
+        else{
+            BSNode<V> finger = null, root = head;
+            while(root != null){
+                if(value.compareTo(root.getValue()) < 0){
+                    finger = root;
+                    root = root.getMenor();
+                }
+                else if(value.compareTo(root.getValue()) > 0){
+                    finger = root;
+                    root = root.getMayor();
+                }
+            }
+            if(value.compareTo(finger.getValue()) < 0)
+                finger.setMenor(new BSNode<>(value));
+            else if(value.compareTo(finger.getValue()) > 0)
+                finger.setMayor(new BSNode<>(value));
+        }
+    }
     /*
      * Eliminar el valor comparable value del arbol.
      * Si no esta, devuelve void.
@@ -30,7 +50,7 @@ public class SplayTree<V extends Comparable> extends BST<V>{
                 BSNode<V> newHead = buscarMayor(head.getMenor());
 
                 //Lo coloca hasta arriba
-                recursiveSplay(null, head, head.getMenor(), newHead.getValue());
+                splay(newHead.getValue());
 
                 //Coloca al mayor elemento de la izquierda como raiz y le coloca
                 //mayor a la derecha
@@ -62,7 +82,7 @@ public class SplayTree<V extends Comparable> extends BST<V>{
      * Mediante operaciones de zig, zag busca el valor en el arbol
      * y lo coloca en la raiz
      */
-    private boolean splay(V value){
+    public boolean splay(V value){
         //Si el arbol esta no vacio
         if(head != null){
             //Llama a recursiveSplay
@@ -162,7 +182,7 @@ public class SplayTree<V extends Comparable> extends BST<V>{
             nodo.setMenor(parent);
         }
     }
-
+    
     /*
      * Metodo toString que muestra los valores de los nodos preOrder
      */
@@ -178,7 +198,7 @@ public class SplayTree<V extends Comparable> extends BST<V>{
             mensaje = "El árbol está vacío.";
         return mensaje;
     }
-
+    
     /*
      * Metodo que recorre el arbol preOrder adjuntando el toString de cada nodo
      */
@@ -207,9 +227,5 @@ public class SplayTree<V extends Comparable> extends BST<V>{
             mensaje += recursiveToString(nodo.getMayor());
 
         return mensaje;
-    }
-
-    void agregar(char charAt, int i) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

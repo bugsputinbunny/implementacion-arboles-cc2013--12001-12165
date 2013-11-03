@@ -760,9 +760,11 @@ public class BiTree<V extends Comparable> implements ITree<V>{
     public String toString(){
         String mensaje;
         //Si el arbol tiene al menos un nodo
-        if(root != null)
+        if(root != null){
             //Llama al metodo recursivo para mostrar el toString de todos los nodos
-            mensaje = recursiveToString(root);
+            mensaje = "Root: ";
+            mensaje += recursiveToString(root);
+        }
         //Si no tiene nodos, muestra que esta vacio
         else
             mensaje = "El árbol está vacío.";

@@ -17,10 +17,11 @@ public class RBTree<V extends Comparable> implements ITree<V>{
     private NodoRedBlack root;
     private NodoRedBlack x;
 
-    @Override
-    public void insertar(V value) {
-        
+    private int tamanio(NodoRedBlack root) {
+        return 1;
     }
+
+   
     
     /**
      * se crea clase interna para definir un nodo del arbol red black
@@ -80,7 +81,7 @@ public class RBTree<V extends Comparable> implements ITree<V>{
      * 
      * Metodo que regresa el tamanio total del arbol
      */
-    public int tamanio(NodoRedBlack der){
+    public int tamanio(){
         return tamanio(root);
     }
     /**
@@ -130,6 +131,11 @@ public class RBTree<V extends Comparable> implements ITree<V>{
      * Si el identificador ya existe agrega la pareja de valor-identificador,
      * sobreescribiendo el valor viejo.
      */
+    
+     @Override
+    public void insertar(V value) {
+        
+    }
     
     public void agregar(V ide,V val){
         root =agregar(root,ide,val);

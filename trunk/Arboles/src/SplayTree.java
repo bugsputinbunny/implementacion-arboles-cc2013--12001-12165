@@ -74,4 +74,8 @@ public class SplayTree<V extends Comparable> extends BST<V>{
 
         return mensaje;
     }
+
+    void agregar(char charAt, int i) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

@@ -1,3 +1,6 @@
+
+import javax.swing.JOptionPane;
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -5,118 +8,273 @@
 
 /**
  *
- * Monica Castellanos 12001
+ * @author MRGomez
  */
-import java.util.*;
-public class Driver {
-    private static Scanner scanner = new Scanner(System.in);
+
+import javax.swing.*;
+public class Driver extends javax.swing.JFrame {
 
     /**
-     * Menu principal
+     * Creates new form Driver
      */
-    public static void main(String[] args) {
-       System.out.println("Escriba una palabra, Cada caracter se almacenera en un arbol");
-       Scanner s = new Scanner(System.in);
-       String letras = s.nextLine();
-       //Pidiendo implementacion
-       System.out.println("Ingrese un numero para seleccionar la implementacion");
-       System.out.println("1. Binary BST");
-       System.out.println("2. Splay Tree");
-       System.out.println("3. Red Black BST");
-       System.out.println("4. 2-3 Tree");
-       boolean correcto = false;
-       int input=0;
-       while(correcto==false){
-            try{
-                String opcion = s.nextLine();
-                input = Integer.parseInt(opcion);
-                if(input<1||input>4){
-                    correcto = false;
-                    System.out.println("No es una opcion valida");
-                    
-                }
-                else{
-                    correcto = true;
-                    int num = input;
-                }
-
-            }
-            catch(NumberFormatException e){
-                System.out.println("No es una opcion valida");
-                correcto = false;
-               
-            }
-       }
-       if(input==1){
-           
-       }
-       else if(input==2){
-           
-       }
-       else if(input==3){
-          //Implementacion Red Black Tree 
-                  
-           RBTree arbol = new RBTree<Integer>();
-           //Agregando letras
-           System.out.println("Palabra ingresada :"+letras);
-           for(int i =0;i<letras.length();i++){
-               arbol.agregar(letras.charAt(i),i);
-           }
-           System.out.println("Ingrese caracter que desea eliminar");
-           String elim = s.nextLine();
-           //Si se ingresa mas de un caracter, solo tomamos el primero
-           Character caracter = elim.charAt(0);
-           arbol.eliminar(caracter);
-           System.out.println("Caracteres en el Arbol despues de eliminar:");
-           for(int i =0;i<letras.length();i++){
-               Character letra = (Character)arbol.get(letras.charAt(i));
-        
-               System.out.print(letra+"  ");
-           }
-       }   
-          
-       else if(input == 4){    
-        }
+    public Driver() {
+        initComponents();
+        dialogo = new TypeDialog(this, true);
+        seleccionarImplementacion();
+        lblDescripcion.setEditable(false);
     }
-    /**
-     * Apoyo para programación defensiva.
-     * Se muestra un mensaje que solicita el ingreso de un número entero que esté
-     * entre menor y mayor, inclusive. Tiene programación defensiva para asegurarse
-     * que sea un entero en ese rango.
-     * @param mensaje Texto a mostrar
-     * @param menor Valor mínimo que se necesita
-     * @param mayor Valor máximo que se necesita
-     * @return El int que ingresó el usuario.
-     * @throws IllegalArgumentException si menor > mayor
-     */
-    private static int obtenerEntero(String mensaje, int menor, int mayor)
-            throws IllegalArgumentException{
-        //pre: menor < mayor
-        //post: Se devuelve un entero entre menor y mayor, inclusive
-        String respuesta;
-        int opcion;
-        if(menor > mayor)
-            throw new IllegalArgumentException();
-        else{
-            while(true){
-                System.out.print(mensaje);
-                respuesta = scanner.nextLine();
-                try{
-                    opcion = Integer.parseInt(respuesta);
-                    if(menor <= opcion && opcion <= mayor)
-                        return opcion;
-                    else
-                        System.out.println("ERROR: \"" + respuesta + "\" no está entre "
-                                + menor + " y " + mayor + ".");
+    
+    private void seleccionarImplementacion(){
+        boolean hayError = true;
+        int tipo;
+        while(hayError){
+            dialogo.setVisible(true);
+            tipo = dialogo.getTipo();
+            if(tipo == -1){
+                JOptionPane.showMessageDialog(this,
+                        "Debe seleccionar un tipo de árbol antes de continuar",
+                        "ERROR",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+            else{
+                arbol = TreeFactory.getTree(tipo);
+                switch(tipo){
+                    case 0:
+                        lblTipo.setText("BST");
+                        break;
+                    case 1:
+                        lblTipo.setText("Splay Tree");
+                        break;
+                    case 2:
+                        lblTipo.setText("Red Black Tree");
+                        break;
+                    case 3:
+                        lblTipo.setText("2-3 Tree");
                 }
-                catch(NumberFormatException e){
-                    System.out.println("ERROR: \"" + respuesta + "\" no es un "
-                            + "número entero.");
-                }
-
-                System.out.println("Ingrese números enteros entre " + menor
-                        + " y " + mayor + " solamente.");
+                lblDescripcion.setText(arbol.toString());
+                hayError = false;
             }
         }
     }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jPanel1 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        lblDescripcion = new javax.swing.JTextArea();
+        txtNumero = new javax.swing.JTextField();
+        btnIngresar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
+        btnTipo = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        lblTipo = new javax.swing.JLabel();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel2.setText("Escriba un número entero y presione 'Ingresar' o 'Eliminar'. El árbol se irá modiifcando");
+
+        jLabel3.setText("a medida que lo vaya cambiando.");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        lblDescripcion.setColumns(20);
+        lblDescripcion.setRows(5);
+        jScrollPane1.setViewportView(lblDescripcion);
+
+        btnIngresar.setText("Ingresar");
+        btnIngresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIngresarActionPerformed(evt);
+            }
+        });
+
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+
+        btnTipo.setText("Seleccionar árbol");
+        btnTipo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTipoActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Tipo de arbol:");
+
+        lblTipo.setText("jLabel2");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblTipo)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnIngresar))
+                            .addComponent(btnEliminar, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnTipo, javax.swing.GroupLayout.Alignment.TRAILING))))
+                .addContainerGap())
+        );
+
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnEliminar, btnIngresar});
+
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnIngresar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnEliminar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(lblTipo))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnTipo)
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
+        String texto = txtNumero.getText();
+        try{
+            Integer numero = new Integer(texto);
+            arbol.insertar(numero);
+            lblDescripcion.setText(arbol.toString());
+        }
+        catch(NumberFormatException e){}
+    }//GEN-LAST:event_btnIngresarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        String texto = txtNumero.getText();
+        try{
+            Integer numero = new Integer(texto);
+            arbol.eliminar(numero);
+            lblDescripcion.setText(arbol.toString());
+        }
+        catch(NumberFormatException e){}
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTipoActionPerformed
+        seleccionarImplementacion();
+    }//GEN-LAST:event_btnTipoActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(Driver.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Driver.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Driver.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Driver.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Driver().setVisible(true);
+            }
+        });
+    }
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnIngresar;
+    private javax.swing.JButton btnTipo;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea lblDescripcion;
+    private javax.swing.JLabel lblTipo;
+    private javax.swing.JTextField txtNumero;
+    // End of variables declaration//GEN-END:variables
+    private TypeDialog dialogo;
+    private ITree<Integer> arbol;
 }

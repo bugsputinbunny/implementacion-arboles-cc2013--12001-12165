@@ -18,6 +18,7 @@ public class SplayTree<V extends Comparable> extends BST<V>{
         //Si no
         else{
             BSNode<V> finger = null, root = head;
+            boolean hayError = false;
             while(root != null){
                 if(value.compareTo(root.getValue()) < 0){
                     finger = root;
@@ -27,11 +28,17 @@ public class SplayTree<V extends Comparable> extends BST<V>{
                     finger = root;
                     root = root.getMayor();
                 }
+                else{
+                    root = null;
+                    hayError = true;
+                }
             }
-            if(value.compareTo(finger.getValue()) < 0)
-                finger.setMenor(new BSNode<>(value));
-            else if(value.compareTo(finger.getValue()) > 0)
-                finger.setMayor(new BSNode<>(value));
+            if(!hayError){
+                if(value.compareTo(finger.getValue()) < 0)
+                    finger.setMenor(new BSNode<>(value));
+                else if(value.compareTo(finger.getValue()) > 0)
+                    finger.setMayor(new BSNode<>(value));
+            }
         }
     }
     /*
@@ -190,9 +197,11 @@ public class SplayTree<V extends Comparable> extends BST<V>{
     public String toString(){
         String mensaje;
         //Si el arbol tiene al menos un nodo
-        if(head != null)
+        if(head != null){
             //Llama al metodo recursivo para mostrar el toString de todos los nodos
-            mensaje = recursiveToString(head);
+            mensaje = "Root: ";
+            mensaje += recursiveToString(head);
+        }
         //Si no tiene nodos, muestra que esta vacio
         else
             mensaje = "El árbol está vacío.";

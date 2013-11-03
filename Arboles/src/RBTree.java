@@ -14,8 +14,8 @@ public class RBTree<V extends Comparable> implements ITree<V>{
      */
     private final boolean rojo=true;
     private final boolean negro=false;// se definen constantes para identificar los nodos rojos y negros
-    private RBTree.NodoRedBlack root;
-    private RBTree.NodoRedBlack x;
+    private NodoRedBlack root;
+    private NodoRedBlack x;
 
     @Override
     public void insertar(V value) {
@@ -28,7 +28,7 @@ public class RBTree<V extends Comparable> implements ITree<V>{
     private class NodoRedBlack{
         private V id;
         private V valor;
-        private RBTree.NodoRedBlack izq,der;
+        private NodoRedBlack izq,der;
         private boolean color;
         private int SubArboles;
         
@@ -60,7 +60,7 @@ public class RBTree<V extends Comparable> implements ITree<V>{
      * Si tomamos el nodo enviado como parametro  como nueva root regresa el tamanio del arbol
      */
     
-    public int size(RBTree.NodoRedBlack m){
+    public int size(NodoRedBlack m){
         if (m==null){
             return 0;
         }
@@ -70,7 +70,7 @@ public class RBTree<V extends Comparable> implements ITree<V>{
      * 
      * Regresa true si el color de un nodo es rojo
      */
-    public boolean esRojo(RBTree.NodoRedBlack m){
+    public boolean esRojo(NodoRedBlack m){
         if (m==null){
             return false;
         }
@@ -80,7 +80,7 @@ public class RBTree<V extends Comparable> implements ITree<V>{
      * 
      * Metodo que regresa el tamanio total del arbol
      */
-    public int tamanio(RBTree.NodoRedBlack der){
+    public int tamanio(NodoRedBlack der){
         return tamanio(root);
     }
     /**
@@ -94,10 +94,10 @@ public class RBTree<V extends Comparable> implements ITree<V>{
      * 
      * Se crean los metodos de obtencion
      */
-    public Comparable get(V ide){
+    public V get(V ide){
         return get(root, ide);
     }
-    public Comparable get(RBTree.NodoRedBlack x, V ide){
+    public V get(NodoRedBlack x, V ide){
         while(x!=null){
             int comp = ide.compareTo(x.id);
             if (comp<0) x=x.izq;
@@ -116,7 +116,7 @@ public class RBTree<V extends Comparable> implements ITree<V>{
         return (get(ide)!=null);
     }
     //Buscal identificador dado a partir de la root enviada como parametro
-    private boolean contains (RBTree.NodoRedBlack x,V ide){
+    private boolean contains (NodoRedBlack x,V ide){
         return (get(x,ide)!=null);
     }
     /**
@@ -136,8 +136,8 @@ public class RBTree<V extends Comparable> implements ITree<V>{
         root.color=negro;
         assert verificarCondiciones();
     }
-    public RBTree.NodoRedBlack agregar(RBTree.NodoRedBlack x,V ide,V valor){
-        if(x==null) return new RBTree.NodoRedBlack(ide,valor,rojo,1);
+    public NodoRedBlack agregar(NodoRedBlack x,V ide,V valor){
+        if(x==null) return new NodoRedBlack(ide,valor,rojo,1);
         int comp =ide.compareTo(x.id);
         if(comp<0) x.izq =agregar(x.izq,ide,valor);
         else if(comp>0) x.der = agregar(x.der,ide,valor);
@@ -155,7 +155,7 @@ public class RBTree<V extends Comparable> implements ITree<V>{
      */
     
     // Eliminar el nodo cono el menor identificador a partir de la root h enviada como paramtetro
-    private RBTree.NodoRedBlack eliminarMin(RBTree.NodoRedBlack h) { 
+    private NodoRedBlack eliminarMin(NodoRedBlack h) { 
         if (h.izq == null)
             return null;
 
@@ -188,7 +188,7 @@ public class RBTree<V extends Comparable> implements ITree<V>{
  * Elimina la key-value con la key dada con el root a h
  */
     
-    private RBTree.NodoRedBlack eliminar(RBTree.NodoRedBlack h, V ide) { 
+    private NodoRedBlack eliminar(NodoRedBlack h, V ide) { 
         assert contains(h, ide);
 
         if (ide.compareTo(h.id) < 0)  {
@@ -205,7 +205,7 @@ public class RBTree<V extends Comparable> implements ITree<V>{
             if (!esRojo(h.der) && !esRojo(h.der.izq))
                 h = moverRojoDer(h);
             if (ide.compareTo(h.id) == 0) {
-                RBTree.NodoRedBlack x = min(h.der);
+                NodoRedBlack x = min(h.der);
                 h.id = x.id;
                 h.valor = x.valor;
                 h.der = eliminarMin(h.der);
@@ -225,7 +225,7 @@ public class RBTree<V extends Comparable> implements ITree<V>{
      * si la root enviada como parametro es roja y los dos hijos son negros
      */
     
-    private RBTree.NodoRedBlack moverRojoIzq(RBTree.NodoRedBlack h) {
+    private NodoRedBlack moverRojoIzq(NodoRedBlack h) {
         assert (h != null);
         assert esRojo(h) && !esRojo(h.izq) && !esRojo(h.izq.izq);
 
@@ -243,7 +243,7 @@ public class RBTree<V extends Comparable> implements ITree<V>{
      * si la root enviada como parametro es roja y los dos hijos son negros
      */
    
-    private RBTree.NodoRedBlack moverRojoDer(RBTree.NodoRedBlack h) {
+    private NodoRedBlack moverRojoDer(NodoRedBlack h) {
         assert (h != null);
         assert esRojo(h) && !esRojo(h.der) && !esRojo(h.der.izq);
         cambiarColores(h);
@@ -257,7 +257,7 @@ public class RBTree<V extends Comparable> implements ITree<V>{
      * Se balancea el arbol a partir del nodo enviado como parametro
      */
     
-    private RBTree.NodoRedBlack balancear(RBTree.NodoRedBlack h) {
+    private NodoRedBlack balancear(NodoRedBlack h) {
         assert (h != null);
         if (esRojo(h.der)) h = rotacionIzq(h);
         if (esRojo(h.izq) && esRojo(h.izq.izq)) h = rotacionDer(h);
@@ -269,9 +269,9 @@ public class RBTree<V extends Comparable> implements ITree<V>{
      * se rotan los nodos a la derecha si se encuentra un desbalance
      */
    
-    public RBTree.NodoRedBlack rotacionDer(RBTree.NodoRedBlack n) {
+    public NodoRedBlack rotacionDer(NodoRedBlack n) {
         assert (n != null) && esRojo(n.izq);
-        RBTree.NodoRedBlack x = n.izq;
+        NodoRedBlack x = n.izq;
         n.izq = x.der;
         x.der = n;
         x.color = x.der.color;
@@ -283,9 +283,9 @@ public class RBTree<V extends Comparable> implements ITree<V>{
      /**
      * se rotan los nodos a la izquierda si se encuentra un desbalance
      */
-    public RBTree.NodoRedBlack rotacionIzq(RBTree.NodoRedBlack n) {
+    public NodoRedBlack rotacionIzq(NodoRedBlack n) {
         assert (n != null) && esRojo(n.der);
-        RBTree.NodoRedBlack x = n.der;
+        NodoRedBlack x = n.der;
         n.der = x.izq;
         x.izq = n;
         x.color = x.izq.color;
@@ -299,7 +299,7 @@ public class RBTree<V extends Comparable> implements ITree<V>{
      * Metodo para cambiar el color de los nodos
      */
     
-    public void cambiarColores(RBTree.NodoRedBlack h) {
+    public void cambiarColores(NodoRedBlack h) {
         //Vericiamos antes que el nodo tenga el color opuesto a sus hijos
         assert (h!=null)&&(h.izq !=null)&&(h.der!=null);
         assert (!esRojo(h)&&esRojo(h.izq)&&esRojo(h.der)||esRojo(h)&&!esRojo(h.izq)&&!esRojo(h.der));
@@ -312,9 +312,9 @@ public class RBTree<V extends Comparable> implements ITree<V>{
      * Retorna el identificador del rango n
      */
     
-    public Comparable seleccionar(int n){
+    public V seleccionar(int n){
         if(n<0||n>=tamanio(x.der))return null;
-        RBTree.NodoRedBlack x = seleccionar(root,n);
+        NodoRedBlack x = seleccionar(root,n);
         return x.id;
     }
     /**
@@ -322,7 +322,7 @@ public class RBTree<V extends Comparable> implements ITree<V>{
      * Retorna el nodo con rango K a partir de la root x enviada como parametro. 
      */
    
-    public RBTree.NodoRedBlack seleccionar(RBTree.NodoRedBlack x,int k){
+    public NodoRedBlack seleccionar(NodoRedBlack x,int k){
         assert x != null;
         assert k>=0 && k<tamanio(x);
         int p = tamanio(x.izq);
@@ -342,7 +342,7 @@ public class RBTree<V extends Comparable> implements ITree<V>{
      * Regresa el numero de identificadores menores que el identificador a partir del nodo enviado como parametro.
      */
     
-    public int rango(V ide,RBTree.NodoRedBlack x){
+    public int rango(V ide,NodoRedBlack x){
         if(x==null) return 0;
         int comp = ide.compareTo(x.id);
         if(comp<0) return rango(ide,x.izq);
@@ -350,20 +350,20 @@ public class RBTree<V extends Comparable> implements ITree<V>{
         else return tamanio(x.izq);
     
     }
-    public Comparable min(){
+    public V min(){
         if(Empty()) return null;
         return min(root).id;
     }
-    public RBTree.NodoRedBlack min(RBTree.NodoRedBlack x){
+    public NodoRedBlack min(NodoRedBlack x){
         assert x!= null;
         if(x.izq==null) return x;
         else return min(x.izq);
     }
-    public Comparable max(){
+    public V max(){
         if(Empty()) return null;
         return max(root).id;
     }
-    public RBTree.NodoRedBlack max(RBTree.NodoRedBlack x){
+    public NodoRedBlack max(NodoRedBlack x){
         assert x !=null;
         if(x.der==null) return x;
         else return max(x.der);
@@ -386,12 +386,12 @@ public class RBTree<V extends Comparable> implements ITree<V>{
      * Metodo para agregar a la cola identificadores entre pequeños y grandes en los subarboles que tienen como raiz a x
      */
    
-    public void identificadores(RBTree.NodoRedBlack x,LinkedList<V> cola,V peq,V grande){
+    public void identificadores(NodoRedBlack x,LinkedList<V> cola,V peq,V grande){
         if(x==null)return;
         int compeq = peq.compareTo(x.id);
         int compgrande = grande.compareTo(x.id);
         if(compeq<0) identificadores(x.izq,cola,peq,grande);
-        if(compeq<=0&&compgrande>=0) cola.add((V) x.id);
+        if(compeq<=0&&compgrande>=0) cola.add(x.id);
         if (compgrande>0) identificadores(x.der,cola,peq,grande);
     }
     
@@ -416,7 +416,7 @@ public class RBTree<V extends Comparable> implements ITree<V>{
     
     public boolean estaBalanceado(){
         int negros =0;
-        RBTree.NodoRedBlack x= root;
+        NodoRedBlack x= root;
         while(x!=null){
             if(!esRojo(x)) negros++;
             x = x.izq;
@@ -428,7 +428,7 @@ public class RBTree<V extends Comparable> implements ITree<V>{
      * Metodo que cuenta el numero de nodos negros a partir de el numero enviado como parametro y el nodo
      */
     
-    public boolean estaBalanceado(RBTree.NodoRedBlack x,int num){
+    public boolean estaBalanceado(NodoRedBlack x,int num){
         if(x==null) return num==0;
         if(!esRojo(x)) num--;
         return estaBalanceado(x.izq,num)&&estaBalanceado(x.der,num);
@@ -447,7 +447,7 @@ public class RBTree<V extends Comparable> implements ITree<V>{
      * Metodo que verifica si la estructura del arbol es 2-3 pero tomando como root el nodo enviado como parametro.
      */
     
-    public boolean estructura23(RBTree.NodoRedBlack x){
+    public boolean estructura23(NodoRedBlack x){
         if(x==null) return true; 
         //Un nodo rojo significa la union de dos nodos en la estructura 2-3
         if(esRojo(x.der)) return false;
@@ -460,11 +460,11 @@ public class RBTree<V extends Comparable> implements ITree<V>{
      * Metodo que sirve para verificar el orden de un sub arbol con la root indicada en el parametro x
      */
     
-    public boolean esOrdenBinario(RBTree.NodoRedBlack x,V min,V max){
+    public boolean esOrdenBinario(NodoRedBlack x,V min,V max){
         if(x==null) return true;
         if(min!=null&& x.id.compareTo(min)<= 0) return false;
         if(max != null&&x.id.compareTo(max)>=0) return false;
-        return esOrdenBinario(x.izq,min, (V) x.id)&& esOrdenBinario(x.der, (V) x.id,max);
+        return esOrdenBinario(x.izq,min,x.id )&& esOrdenBinario(x.der,x.id,max);
     }
     /**
      * Metodo que verifica el orden de todo el arbol
@@ -482,7 +482,7 @@ public class RBTree<V extends Comparable> implements ITree<V>{
      * 
      * Metodo que verifica el tamanio a partir del nodo enviado como parametro en x
      */
-    public boolean hayTamanioCorrecto(RBTree.NodoRedBlack x){
+    public boolean hayTamanioCorrecto(NodoRedBlack x){
         if(x==null)return true;
         if(x.SubArboles!= tamanio(x.izq)+tamanio(x.der)+1)return false;
         return hayTamanioCorrecto(x.izq)&&hayTamanioCorrecto(x.der);
@@ -492,7 +492,7 @@ public class RBTree<V extends Comparable> implements ITree<V>{
      */
     public boolean rangoConsistente(){
         for(int i=0;i<tamanio(x.der);i++){
-            if(i!= rango((V) seleccionar(i))) return false;
+            if(i!= rango(seleccionar(i))) return false;
             
         }
         for(V ide:identificadores()){

@@ -11,7 +11,6 @@ import javax.swing.JOptionPane;
  * @author MRGomez
  */
 
-import javax.swing.*;
 public class Driver extends javax.swing.JFrame {
 
     /**
@@ -41,15 +40,20 @@ public class Driver extends javax.swing.JFrame {
                 switch(tipo){
                     case 0:
                         lblTipo.setText("BST");
+                        btnSplay.setVisible(false);
                         break;
                     case 1:
                         lblTipo.setText("Splay Tree");
+                        btnSplay.setVisible(true);
                         break;
                     case 2:
                         lblTipo.setText("Red Black Tree");
+                        btnSplay.setVisible(false);
                         break;
                     case 3:
                         lblTipo.setText("2-3 Tree");
+                        btnSplay.setVisible(false);
+                        break;
                 }
                 lblDescripcion.setText(arbol.toString());
                 hayError = false;
@@ -78,6 +82,7 @@ public class Driver extends javax.swing.JFrame {
         btnTipo = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         lblTipo = new javax.swing.JLabel();
+        btnSplay = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -135,6 +140,13 @@ public class Driver extends javax.swing.JFrame {
 
         lblTipo.setText("jLabel2");
 
+        btnSplay.setText("Splay");
+        btnSplay.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSplayActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -150,17 +162,19 @@ public class Driver extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnIngresar))
-                            .addComponent(btnEliminar, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnTipo, javax.swing.GroupLayout.Alignment.TRAILING))))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                    .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnIngresar))
+                                .addComponent(btnEliminar, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(btnTipo, javax.swing.GroupLayout.Alignment.TRAILING))
+                            .addComponent(btnSplay, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addContainerGap())
         );
 
-        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnEliminar, btnIngresar});
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnEliminar, btnIngresar, btnSplay});
 
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -172,7 +186,9 @@ public class Driver extends javax.swing.JFrame {
                     .addComponent(btnIngresar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnEliminar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnSplay)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(lblTipo))
@@ -209,6 +225,7 @@ public class Driver extends javax.swing.JFrame {
             Integer numero = new Integer(texto);
             arbol.insertar(numero);
             lblDescripcion.setText(arbol.toString());
+            txtNumero.setText("");
         }
         catch(NumberFormatException e){}
     }//GEN-LAST:event_btnIngresarActionPerformed
@@ -219,6 +236,7 @@ public class Driver extends javax.swing.JFrame {
             Integer numero = new Integer(texto);
             arbol.eliminar(numero);
             lblDescripcion.setText(arbol.toString());
+            txtNumero.setText("");
         }
         catch(NumberFormatException e){}
     }//GEN-LAST:event_btnEliminarActionPerformed
@@ -226,6 +244,17 @@ public class Driver extends javax.swing.JFrame {
     private void btnTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTipoActionPerformed
         seleccionarImplementacion();
     }//GEN-LAST:event_btnTipoActionPerformed
+
+    private void btnSplayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSplayActionPerformed
+        String texto = txtNumero.getText();
+        try{
+            Integer numero = new Integer(texto);
+            ((SplayTree)arbol).splay(numero);
+            lblDescripcion.setText(arbol.toString());
+            txtNumero.setText("");
+        }
+        catch(NumberFormatException e){}
+    }//GEN-LAST:event_btnSplayActionPerformed
 
     /**
      * @param args the command line arguments
@@ -264,6 +293,7 @@ public class Driver extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnIngresar;
+    private javax.swing.JButton btnSplay;
     private javax.swing.JButton btnTipo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

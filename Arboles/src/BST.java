@@ -12,8 +12,19 @@ public class BST<V extends Comparable> implements ITree<V>{
      */
     @Override
     public void insertar(V value){
-        
+        BST izq = null;
+        BST der = null;
+        String cadena;
+        cadena = null;
+        if (value==null)
+            value= new BST;
+        else if (cadena.compareTo(cadena) < 0)
+            value.izq = insertar(value.izq);
+        else
+            value.der = insertar(value.der);
+        return value;
     }
+    
     
     /*
      * Eliminar el valor comparable e del arbol.
@@ -168,4 +179,5 @@ public class BST<V extends Comparable> implements ITree<V>{
 
         return mensaje;
     }
+
 }

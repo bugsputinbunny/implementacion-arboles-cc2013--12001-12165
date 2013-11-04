@@ -11,36 +11,6 @@ public class SplayTree<V extends Comparable> extends BST<V>{
         super();
     }
 
-    public void insertar(V value){
-        //Si el arbol esta vacio
-        if(head == null)
-            head = new BSNode<>(value);
-        //Si no
-        else{
-            BSNode<V> finger = null, root = head;
-            boolean hayError = false;
-            while(root != null){
-                if(value.compareTo(root.getValue()) < 0){
-                    finger = root;
-                    root = root.getMenor();
-                }
-                else if(value.compareTo(root.getValue()) > 0){
-                    finger = root;
-                    root = root.getMayor();
-                }
-                else{
-                    root = null;
-                    hayError = true;
-                }
-            }
-            if(!hayError){
-                if(value.compareTo(finger.getValue()) < 0)
-                    finger.setMenor(new BSNode<>(value));
-                else if(value.compareTo(finger.getValue()) > 0)
-                    finger.setMayor(new BSNode<>(value));
-            }
-        }
-    }
     /*
      * Eliminar el valor comparable value del arbol.
      * Si no esta, devuelve void.

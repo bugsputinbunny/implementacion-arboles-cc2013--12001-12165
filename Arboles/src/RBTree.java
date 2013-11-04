@@ -41,7 +41,32 @@ public class RBTree<V extends Comparable> implements ITree<V>{
             this.valor=valor;
             this.color=color;
             this.SubArboles = SubArboles;
-            
+        }
+        
+        public V getValor(){return valor;}
+        public NodoRedBlack getIzq(){return izq;}
+        public NodoRedBlack getDer(){return der;}
+        
+        public String toString(){
+            String mensaje = "";
+            //Adjunta su valor y color
+            mensaje += "[";
+            mensaje += (valor!=null) ? valor.toString() : null;
+            mensaje += ", " + ((color) ? "rojo" : "negro");
+            mensaje += "]: ";
+
+            //Adjunta el valor de sus hijos
+            if(izq != null)
+                mensaje += (izq.getValor()!=null) ? izq.getValor().toString() : null;
+            else
+                mensaje += null;
+            mensaje += ", ";
+            if(der != null)
+                mensaje += (der.getValor()!=null) ? der.getValor().toString() : null;
+            else
+                mensaje += null;
+
+            return mensaje;
         }
     }
     /**
@@ -134,7 +159,7 @@ public class RBTree<V extends Comparable> implements ITree<V>{
     
      @Override
     public void insertar(V value) {
-        
+        agregar(value, value);
     }
     
     public void agregar(V ide,V val){
@@ -507,5 +532,35 @@ public class RBTree<V extends Comparable> implements ITree<V>{
         return true;
     }
 
+    @Override
+    public String toString(){
+        String mensaje;
+        //Si el arbol tiene al menos un nodo
+        if(root != null)
+            //Llama al metodo recursivo para mostrar el toString de todos los nodos
+            mensaje = recursiveToString(root);
+        //Si no tiene nodos, muestra que esta vacio
+        else
+            mensaje = "El árbol está vacío.";
+        return mensaje;
+    }
     
+    /*
+     * Metodo que recorre el arbol preOrder adjuntando el toString de cada nodo
+     */
+    protected String recursiveToString(RBTree<V>.NodoRedBlack nodo){
+        boolean left, right;
+        String mensaje = "";
+
+        //Adjunta su propio valor
+        mensaje += nodo.toString() + "\n";
+
+        //Si tiene hijos, busca la información de los nietos
+        if(nodo.getIzq() != null)
+            mensaje += recursiveToString(nodo.getIzq());
+        if(nodo.getDer() != null)
+            mensaje += recursiveToString(nodo.getDer());
+
+        return mensaje;
+    }
 }

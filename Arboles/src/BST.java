@@ -12,17 +12,34 @@ public class BST<V extends Comparable> implements ITree<V>{
      */
     @Override
     public void insertar(V value){
-        BST izq = null;
-        BST der = null;
-        String cadena;
-        cadena = null;
-        if (value==null)
-            value= new BST;
-        else if (cadena.compareTo(cadena) < 0)
-            value.izq = insertar(value.izq);
-        else
-            value.der = insertar(value.der);
-        return value;
+        //Si el arbol esta vacio
+        if(head == null)
+            head = new BSNode<>(value);
+        //Si no
+        else{
+            BSNode<V> finger = null, root = head;
+            boolean hayError = false;
+            while(root != null){
+                if(value.compareTo(root.getValue()) < 0){
+                    finger = root;
+                    root = root.getMenor();
+                }
+                else if(value.compareTo(root.getValue()) > 0){
+                    finger = root;
+                    root = root.getMayor();
+                }
+                else{
+                    root = null;
+                    hayError = true;
+                }
+            }
+            if(!hayError){
+                if(value.compareTo(finger.getValue()) < 0)
+                    finger.setMenor(new BSNode<>(value));
+                else if(value.compareTo(finger.getValue()) > 0)
+                    finger.setMayor(new BSNode<>(value));
+            }
+        }
     }
     
     
@@ -76,8 +93,11 @@ public class BST<V extends Comparable> implements ITree<V>{
     }
     
     public void sustituir(BSNode<V> parent, BSNode<V> prevNode, BSNode<V> newNode){
-        if(parent.getMenor().equals(prevNode))
-            parent.setMenor(newNode);
+        if(parent.getMenor() != null)
+            if(parent.getMenor().equals(prevNode))
+                parent.setMenor(newNode);
+            else
+                parent.setMayor(newNode);
         else
             parent.setMayor(newNode);
     }

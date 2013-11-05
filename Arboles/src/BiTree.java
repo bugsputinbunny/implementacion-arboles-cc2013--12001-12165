@@ -1,3 +1,12 @@
+/*
+ * Mario Roberto Gómez Flores (12165)
+ * Mónica Lorena Castellanos Pellecer (12001)
+ * Sección 40
+ * BiTree.java 
+ * Implementacion del arbol 2-3
+ * 04 de Noviembre de 2013
+ */
+
 /**
  *  A 2-3 tree is a balanced search tree where each node can have either two children and one value (2-node),
  * or three children and two values (3-node).

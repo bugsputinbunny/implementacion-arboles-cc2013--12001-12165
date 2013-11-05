@@ -1,12 +1,14 @@
 
 import java.util.LinkedList;
 
-/**
+/*
  * Mario Roberto Gómez Flores (12165)
- * Monica Castellanos 12001
- *
+ * Mónica Lorena Castellanos Pellecer (12001)
+ * Sección 40
+ * RBTree.java 
+ * Implementacion del arbol Red Black 
+ * 04 de Noviembre de 2013
  */
-
 public class RBTree<V extends Comparable> implements ITree<V>{
     
     /**

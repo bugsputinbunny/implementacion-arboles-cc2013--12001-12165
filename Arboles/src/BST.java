@@ -1,7 +1,10 @@
-/**
+/*
  * Mario Roberto Gómez Flores (12165)
- * 
- *
+ * Mónica Lorena Castellanos Pellecer (12001)
+ * Sección 40
+ * BST.java 
+ * Implementacion del arbol BST
+ * 04 de Noviembre de 2013
  */
 import java.util.ArrayList;
 public class BST<V extends Comparable> implements ITree<V>{

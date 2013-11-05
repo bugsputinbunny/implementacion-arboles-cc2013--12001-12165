@@ -1,7 +1,10 @@
-/**
+/*
  * Mario Roberto Gómez Flores (12165)
- * 
- *
+ * Mónica Lorena Castellanos Pellecer (12001)
+ * Sección 40
+ * TreeFactory.java 
+ * Clase Factory para poder elegir entre los cuatro arboles
+ * 04 de Noviembre de 2013
  */
 
 public class TreeFactory{

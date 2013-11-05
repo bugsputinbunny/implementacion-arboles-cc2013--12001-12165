@@ -1,7 +1,9 @@
-/**
+/*
  * Mario Roberto Gómez Flores (12165)
- * 
- *
+ * Mónica Lorena Castellanos Pellecer (12001)
+ * Sección 40
+ * BSNode.java 
+ * 04 de Noviembre de 2013
  */
 
 public class BSNode<V extends Comparable> {

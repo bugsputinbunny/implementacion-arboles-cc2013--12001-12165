@@ -1,7 +1,10 @@
-/**
+/*
  * Mario Roberto Gómez Flores (12165)
- * 
- *
+ * Mónica Lorena Castellanos Pellecer (12001)
+ * Sección 40
+ * SplayTree.java 
+ * Implementacion del arbol SplayTree
+ * 04 de Noviembre de 2013
  */
 public class SplayTree<V extends Comparable> extends BST<V>{
     /*
